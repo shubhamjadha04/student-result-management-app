@@ -7,7 +7,6 @@ conn = mysql.connector.connect(
     database = 'student_db'
 )
 
-conn.commit()
-conn.close()
+cursor = conn.cursor()
 
 print("connected successfully...")
