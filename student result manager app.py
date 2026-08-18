@@ -1,4 +1,4 @@
-Student = { }
+from sql_connection import conn, cursor
 
 while True:
     print("\n  Student result manager App.........")
@@ -13,39 +13,49 @@ while True:
     if choise == 1:
         name = input("Enter student name: ").lower()
         marks = int(input("Enter student marks: "))
-        Student[name] = marks
-        print(f"{name} student is added successfully.. ")
+        query = "INSERT INTO students(name, marks) VALUES(%s, %s)"
 
-# view student 
+        cursor.execute(query, (name, marks))
+
+        conn.commit()
+
+        print(f"{name} student added successfully.")
+
+# # view student 
     elif choise == 2:
-        if not Student:
+        cursor.execute("SELECT * FROM students")
+
+        students = cursor.fetchall()
+
+        if not students:
             print("There is no student found......")
         else:
-            print(Student)
+            for student in students:
+                print(student)
 
-# check result
-    elif choise == 3:
-        stu = input("Enter student name: ")
-        if stu in Student:
+# # check result
+#     elif choise == 3:
+#         stu = input("Enter student name: ")
+#         if stu in Student:
 
-            if Student[stu] > 45:
-                print("PASS...")
-            else:
-                print("FAIL...")
-        else:
-            print("Student not found....")
+#             if Student[stu] > 45:
+#                 print("PASS...")
+#             else:
+#                 print("FAIL...")
+#         else:
+#             print("Student not found....")
 
-# update marks
-    elif choise == 4:
-      stu = input("Enter student name: ").lower()
-      newmarks = int(input("Enter new marks: "))
+# # update marks
+#     elif choise == 4:
+#       stu = input("Enter student name: ").lower()
+#       newmarks = int(input("Enter new marks: "))
 
-      if stu in Student:
-        Student[stu] = newmarks
-        print(f"{stu} new marks are {newmarks}.")
-        print("updated successfully..")
-      else:
-          print("student not found ....")
+#       if stu in Student:
+#         Student[stu] = newmarks
+#         print(f"{stu} new marks are {newmarks}.")
+#         print("updated successfully..")
+#       else:
+#           print("student not found ....")
 
 # to exitt
     elif choise == 5:
