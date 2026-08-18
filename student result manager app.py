@@ -34,16 +34,23 @@ while True:
                 print(student)
 
 # # check result
-#     elif choise == 3:
-#         stu = input("Enter student name: ")
-#         if stu in Student:
+    elif choise == 3:
+        stu = input("Enter student name: ").lower()
 
-#             if Student[stu] > 45:
-#                 print("PASS...")
-#             else:
-#                 print("FAIL...")
-#         else:
-#             print("Student not found....")
+        query = "SELECT marks FROM students WHERE name = %s"
+        cursor.execute(query,(stu,))
+
+        result = cursor.fetchone()
+
+        if result:
+            marks = result[0]
+            if marks >= 45:
+                print("The Student is PASS")
+            else:
+                print("The Student is FAIL")    
+        else:
+            print("Student is not found..")
+
 
 # # update marks
 #     elif choise == 4:
