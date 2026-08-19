@@ -78,7 +78,10 @@ while True:
         query = "DELETE  FROM students WHERE id = %s"
         cursor.execute(query,(student_id,))
         conn.commit()
-        print(f"{student_id} is deleted from database.")
+        if cursor.rowcount>0:
+            print(f"{student_id} is deleted from database.")
+        else:
+            print("ID not found...")
 
 
 # to exitt
