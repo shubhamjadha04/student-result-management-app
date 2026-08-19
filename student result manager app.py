@@ -53,16 +53,22 @@ while True:
 
 
 # # update marks
-#     elif choise == 4:
-#       stu = input("Enter student name: ").lower()
-#       newmarks = int(input("Enter new marks: "))
+    elif choise == 4:
 
-#       if stu in Student:
-#         Student[stu] = newmarks
-#         print(f"{stu} new marks are {newmarks}.")
-#         print("updated successfully..")
-#       else:
-#           print("student not found ....")
+        stu = input("Enter student name: ")
+
+        newmarks = int(input("Enter new marks: "))
+
+        query = "UPDATE students SET marks = %s WHERE name = %s"
+
+        cursor.execute(query, (newmarks, stu))
+
+        conn.commit()
+
+        if cursor.rowcount > 0:
+            print("Marks updated successfully.")
+        else:
+            print("Student not found.")
 
 # to exitt
     elif choise == 5:
