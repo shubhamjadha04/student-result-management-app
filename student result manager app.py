@@ -6,7 +6,8 @@ while True:
     print("2 , for view the student. ")
     print("3 , for check the result. ")
     print("4 , for update the marks. ")
-    print("5 , to exit.")
+    print("5 , for deleting the student. ")
+    print("6 , to exit.")
 
     choise = int(input("Enter your choise: "))
 # add student 
@@ -20,6 +21,7 @@ while True:
         conn.commit()
 
         print(f"{name} student added successfully.")
+        print("Student ID is:", cursor.lastrowid)
 
 # # view student 
     elif choise == 2:
@@ -35,10 +37,10 @@ while True:
 
 # # check result
     elif choise == 3:
-        stu = input("Enter student name: ").lower()
+        student_id = int(input("Enter student id: "))
 
-        query = "SELECT marks FROM students WHERE name = %s"
-        cursor.execute(query,(stu,))
+        query = "SELECT marks FROM students WHERE id = %s"
+        cursor.execute(query,(student_id,))
 
         result = cursor.fetchone()
 
@@ -55,13 +57,13 @@ while True:
 # # update marks
     elif choise == 4:
 
-        stu = input("Enter student name: ")
+        student_id = int(input("Enter student id: "))
 
         newmarks = int(input("Enter new marks: "))
 
-        query = "UPDATE students SET marks = %s WHERE name = %s"
+        query = "UPDATE students SET marks = %s WHERE id = %s"
 
-        cursor.execute(query, (newmarks, stu))
+        cursor.execute(query, (newmarks, student_id))
 
         conn.commit()
 
@@ -70,8 +72,17 @@ while True:
         else:
             print("Student not found.")
 
-# to exitt
+# delete Student
     elif choise == 5:
+        student_id = int(input("Enter student id: "))
+        query = "DELETE  FROM students WHERE id = %s"
+        cursor.execute(query,(student_id,))
+        conn.commit()
+        print(f"{student_id} is deleted from database.")
+
+
+# to exitt
+    elif choise == 6:
         break
     else:
         print("INVALID CHOISE OF THE OPTION ....")
